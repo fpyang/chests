@@ -18,6 +18,11 @@ class Chest extends StatefulWidget {
     cs.refresh();
   }
 
+  void alert(){
+    cs.alert();
+
+  }
+
   void set uid(u){
     _uid = u;
   }
@@ -51,6 +56,43 @@ class _ChestState extends State<Chest> {
 
     );
 
+  }
+
+  void alert(){
+
+    _showUserDialog();
+  }
+
+  void _showUserDialog() {
+    showDialog(
+        context: context,
+        builder: (_) => new AlertDialog(
+          title: new Text("錯誤訊息"),
+          content: Column(
+              children: [
+                TextField(
+                    decoration: InputDecoration(
+                        border: InputBorder.none,
+                        hintText: '所輸入的皇室戰爭 id 錯誤'
+                    )),
+                Expanded(child: Image.asset('assets/screens/id.png', width: MediaQuery.of(context).size.width*0.4)),
+                Padding(
+                  padding: const EdgeInsets.all(15.0),
+                  child: RaisedButton(
+                    child: const Text('確認', style: TextStyle(fontWeight: FontWeight.bold,
+                        color: Colors.white,fontSize: 16.0)),
+                    color: Theme.of(context).accentColor,
+                    elevation: 4.0,
+                    splashColor: Colors.blueGrey,
+                    onPressed: () {
+                      Navigator.pop(context);
+                    },
+                  ),
+                )
+              ]
+          ),
+        )
+    );
   }
 
   void refresh() async {
@@ -98,7 +140,7 @@ class _ChestState extends State<Chest> {
                 children: [
                   Text(index.toString()+' ', style: TextStyle(fontWeight: FontWeight.bold,
                       color: Colors.black.withOpacity(0.6),fontSize: 20.0)),
-                  Image.network(nameMapping(data),
+                  Image.asset(nameMapping(data),
                       height: chestSize, width: chestSize),
                 ]
             ),
@@ -133,12 +175,12 @@ class _ChestState extends State<Chest> {
   }
 
   String nameMapping(String orgName){
-    String prefix = 'http://www.clashapi.xyz/images/chests/';
+    String prefix = 'assets/chests/';//'http://www.clashapi.xyz/images/chests/';
     String suffix = '-chest.png';
     orgName = orgName.replaceAll("gold", "golden");
     if(orgName=='mega lightning'){
 
-      return 'http://www.clashapi.xyz/images/chests/super-magical-chest.png';
+      return 'assets/chests/super-magical-chest.png';
 
     }else{
       String dashName = orgName.replaceAll(" ", "-");
